@@ -1,0 +1,453 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction to Multi-Task Learning - MTL</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> Introduction to Multi-Task Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/introduction.html" class="active"><strong aria-hidden="true">1.1.</strong> Introduction to Multi-Task Learning</a></li><li class="chapter-item expanded "><a href="../intro/notions.html"><strong aria-hidden="true">1.2.</strong> Architecture, Encoders & Decoders</a></li><li class="chapter-item expanded "><a href="../intro/utk-face-dataset.html"><strong aria-hidden="true">1.3.</strong> Project: UTK-Face Dataset</a></li><li class="chapter-item expanded "><a href="../intro/implementing_mtl.html"><strong aria-hidden="true">1.4.</strong> Implementing Multi-Task Learning</a></li><li class="chapter-item expanded "><a href="../intro/architectures.html"><strong aria-hidden="true">1.5.</strong> 10 Multi-Task Learning Architectures to Know About</a></li><li class="chapter-item expanded "><a href="../intro/hydranets_computer_vision.html"><strong aria-hidden="true">1.6.</strong> HydraNets in Computer Vision</a></li></ol></li><li class="chapter-item expanded "><a href="../self_driving/index.html"><strong aria-hidden="true">2.</strong> Running HydraNet Models for Self-Driving Cars</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../self_driving/project_intro.html"><strong aria-hidden="true">2.1.</strong> HydraNet for Self-Driving Car Project</a></li><li class="chapter-item expanded "><a href="../self_driving/encoder.html"><strong aria-hidden="true">2.2.</strong> Building the Encoder</a></li><li class="chapter-item expanded "><a href="../self_driving/decoder.html"><strong aria-hidden="true">2.3.</strong> Building the Decoder</a></li><li class="chapter-item expanded "><a href="../self_driving/running_hydranet.html"><strong aria-hidden="true">2.4.</strong> Running the HydraNet</a></li><li class="chapter-item expanded "><a href="../self_driving/3d_segmentation.html"><strong aria-hidden="true">2.5.</strong> 3D Segmentation</a></li></ol></li><li class="chapter-item expanded "><a href="../jetracer/index.html"><strong aria-hidden="true">3.</strong> Training HydraNet Models for JetRacer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../jetracer/overview.html"><strong aria-hidden="true">3.1.</strong> Training a HydraNet — Overview</a></li><li class="chapter-item expanded "><a href="../jetracer/dataloader.html"><strong aria-hidden="true">3.2.</strong> Building a DataLoader</a></li><li class="chapter-item expanded "><a href="../jetracer/assembling_hydranet.html"><strong aria-hidden="true">3.3.</strong> Assembling the HydraNet</a></li><li class="chapter-item expanded "><a href="../jetracer/training.html"><strong aria-hidden="true">3.4.</strong> Training the Model</a></li><li class="chapter-item expanded "><a href="../jetracer/deep_learning_optimization.html"><strong aria-hidden="true">3.5.</strong> Introduction to Deep Learning Optimization</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">MTL</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction-to-multi-task-learning-mtl"><a class="header" href="#introduction-to-multi-task-learning-mtl">Introduction to Multi-Task Learning (MTL)</a></h1>
+<p><strong>Multi-Task Learning (MTL)</strong> is a machine learning paradigm where a single model is trained to perform multiple tasks simultaneously by sharing representations. Instead of training separate models for each task, MTL utilizes a shared network of parameters and resources, enhancing efficiency and often yielding superior performance across tasks. MTL is particularly beneficial in scenarios where tasks are related, such as image classification, object detection, depth estimation, and segmentation.</p>
+<h2 id="overview-of-multi-task-learning-architecture"><a class="header" href="#overview-of-multi-task-learning-architecture">Overview of Multi-Task Learning Architecture</a></h2>
+<p>An MTL model typically comprises two main components:</p>
+<ol>
+<li>
+<p><strong>Shared Layers (Encoders):</strong></p>
+<ul>
+<li><strong>Function:</strong> Serve as the backbone of the MTL model, extracting common features from the input data.</li>
+<li><strong>Implementation:</strong> Often implemented using Convolutional Neural Networks (CNNs) for image-based tasks.</li>
+<li><strong>Benefit:</strong> By sharing these layers across tasks, the model reduces redundancy and computational overhead.</li>
+</ul>
+</li>
+<li>
+<p><strong>Task-Specific Heads (Decoders):</strong></p>
+<ul>
+<li><strong>Function:</strong> Dedicated layers appended to the shared encoder, each tailored to perform a specific task.</li>
+<li><strong>Implementation:</strong> Each head may consist of additional neural network layers optimized for its respective task, such as segmentation, depth estimation, optical flow estimation, or object detection.</li>
+<li><strong>Benefit:</strong> Allows the model to specialize in individual tasks while leveraging shared feature representations.</li>
+</ul>
+</li>
+</ol>
+<h2 id="motivation-for-multi-task-learning"><a class="header" href="#motivation-for-multi-task-learning">Motivation for Multi-Task Learning</a></h2>
+<p>MTL offers several advantages over training separate models for each task:</p>
+<ul>
+<li>
+<p><strong>Resource Efficiency:</strong></p>
+<ul>
+<li><strong>Consolidation:</strong> Combines multiple neural networks into a single model, reducing computational resources.</li>
+<li><strong>Scalability:</strong> Particularly advantageous in cloud computing environments where thousands of models may run simultaneously.</li>
+</ul>
+</li>
+<li>
+<p><strong>Feature Transfer and Generalization:</strong></p>
+<ul>
+<li><strong>Shared Learning:</strong> Enables the model to utilize features learned from one task to enhance performance in another.</li>
+<li><strong>Improved Generalization:</strong> Enhances the model’s ability to generalize by leveraging shared representations across tasks.</li>
+</ul>
+</li>
+<li>
+<p><strong>Reduced Model Size:</strong></p>
+<ul>
+<li><strong>Compactness:</strong> A shared network of layers results in a more compact model, facilitating easier deployment and faster execution.</li>
+</ul>
+</li>
+</ul>
+<h2 id="example-tasks-in-mtl"><a class="header" href="#example-tasks-in-mtl">Example Tasks in MTL</a></h2>
+<p>MTL can encompass a variety of tasks, particularly those that are interrelated. Below are common examples:</p>
+<h2 id="1-segmentation"><a class="header" href="#1-segmentation">1. Segmentation</a></h2>
+<ul>
+<li><strong>Objective:</strong> Classify each pixel in an image, producing a mask where every pixel is assigned a class label (e.g., ‘background,’ ‘pedestrian,’ ‘vehicle’).</li>
+<li><strong>Use Case:</strong> In autonomous driving, segmenting a street scene to identify roads, cars, pedestrians, and other objects.</li>
+</ul>
+<h2 id="2-depth-estimation"><a class="header" href="#2-depth-estimation">2. Depth Estimation</a></h2>
+<ul>
+<li><strong>Objective:</strong> Estimate the distance of each pixel from the camera, generating a depth map.</li>
+<li><strong>Use Case:</strong> Essential for robotics and autonomous vehicles to understand spatial relationships and navigate environments.</li>
+</ul>
+<h2 id="3-optical-flow-estimation"><a class="header" href="#3-optical-flow-estimation">3. Optical Flow Estimation</a></h2>
+<ul>
+<li><strong>Objective:</strong> Measure the movement of pixels between consecutive frames in a video, capturing motion information.</li>
+<li><strong>Use Case:</strong> Determining the speed and direction of moving objects, useful in applications like video analysis and autonomous driving.</li>
+</ul>
+<h2 id="4-object-detection"><a class="header" href="#4-object-detection">4. Object Detection</a></h2>
+<ul>
+<li><strong>Objective:</strong> Detect and classify objects within an image, providing bounding boxes around identified objects.</li>
+<li><strong>Use Case:</strong> Identifying and classifying pedestrians, vehicles, and obstacles in real-time for autonomous driving systems.</li>
+</ul>
+<h2 id="key-concepts-in-mtl"><a class="header" href="#key-concepts-in-mtl">Key Concepts in MTL</a></h2>
+<h2 id="shared-representations-and-task-specific-heads"><a class="header" href="#shared-representations-and-task-specific-heads">Shared Representations and Task-Specific Heads</a></h2>
+<ul>
+<li><strong>Shared Layers:</strong> Act as a universal feature extractor, capturing fundamental data characteristics applicable to all tasks.</li>
+<li><strong>Task-Specific Heads:</strong> Utilize the shared features to perform their designated tasks, ensuring specialization without redundant computations.</li>
+<li><strong>Modular Structure:</strong> Enhances computational efficiency by avoiding repeated feature extraction for each task.</li>
+</ul>
+<h2 id="multi-label-classification-vs-multi-task-learning"><a class="header" href="#multi-label-classification-vs-multi-task-learning">Multi-Label Classification vs. Multi-Task Learning</a></h2>
+<ul>
+<li>
+<p><strong>Multi-Label Classification:</strong></p>
+<ul>
+<li><strong>Definition:</strong> A single task where multiple labels are assigned to a single input (e.g., identifying all objects in an image like car, truck, pedestrian).</li>
+<li><strong>Scope:</strong> Focuses solely on classification tasks.</li>
+</ul>
+</li>
+<li>
+<p><strong>Multi-Task Learning:</strong></p>
+<ul>
+<li><strong>Definition:</strong> Simultaneously addresses multiple distinct tasks (e.g., classification, regression, segmentation) within a single model.</li>
+<li><strong>Scope:</strong> Extends beyond classification to include various types of tasks, enhancing the model’s versatility.</li>
+</ul>
+</li>
+</ul>
+<h2 id="challenges-in-mtl"><a class="header" href="#challenges-in-mtl">Challenges in MTL</a></h2>
+<p>Implementing MTL comes with its set of challenges that need to be addressed to ensure optimal performance:</p>
+<h2 id="imbalance-in-task-data"><a class="header" href="#imbalance-in-task-data">Imbalance in Task Data</a></h2>
+<ul>
+<li><strong>Issue:</strong> Different tasks may have varying amounts of labeled data (e.g., thousands of images for depth estimation vs. hundreds for segmentation).</li>
+<li><strong>Impact:</strong> Can lead to overfitting on tasks with abundant data and underperformance on those with limited data.</li>
+<li><strong>Solution:</strong> Employ strategies to balance the training process, such as data augmentation, weighted loss functions, or resampling techniques.</li>
+</ul>
+<h2 id="task-specific-optimization-parameters"><a class="header" href="#task-specific-optimization-parameters">Task-Specific Optimization Parameters</a></h2>
+<ul>
+<li>
+<p><strong>Different Learning Rates:</strong></p>
+<ul>
+<li><strong>Challenge:</strong> Some tasks may require faster convergence, while others need slower learning rates to prevent overfitting.</li>
+<li><strong>Solution:</strong> Implement adaptive learning rate strategies or use separate optimizers for different task-specific heads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Custom Loss Functions:</strong></p>
+<ul>
+<li><strong>Challenge:</strong> Different tasks may have distinct loss functions (e.g., mean squared error for regression tasks vs. cross-entropy for classification tasks).</li>
+<li><strong>Solution:</strong> Combine loss functions appropriately, possibly weighting them to reflect the importance or difficulty of each task.</li>
+</ul>
+</li>
+</ul>
+<h2 id="potential-task-interference"><a class="header" href="#potential-task-interference">Potential Task Interference</a></h2>
+<ul>
+<li><strong>Issue:</strong> Tasks may conflict in their feature representations, leading to degradation in performance for one or more tasks.</li>
+<li><strong>Impact:</strong> One task may perform well while negatively affecting others, undermining the benefits of MTL.</li>
+<li><strong>Solution:</strong> Utilize techniques like task-specific normalization, attention mechanisms, or carefully design the shared layers to minimize interference.</li>
+</ul>
+<h2 id="benefits-of-multi-task-learning"><a class="header" href="#benefits-of-multi-task-learning">Benefits of Multi-Task Learning</a></h2>
+<p>MTL offers several significant advantages:</p>
+<ul>
+<li>
+<p><strong>Reduced Training Time:</strong></p>
+<ul>
+<li><strong>Efficiency:</strong> Training a single model for multiple tasks is generally faster and consumes less computational power than training separate models for each task.</li>
+</ul>
+</li>
+<li>
+<p><strong>Improved Generalization:</strong></p>
+<ul>
+<li><strong>Shared Representations:</strong> Learning across multiple tasks helps the model develop more robust and generalizable features, enhancing overall performance.</li>
+</ul>
+</li>
+<li>
+<p><strong>Enhanced Performance:</strong></p>
+<ul>
+<li><strong>Transfer Learning:</strong> Knowledge gained from one task can improve performance in related tasks, especially those with limited data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Compact Model Size:</strong></p>
+<ul>
+<li><strong>Deployment:</strong> A single, compact model is easier to deploy and manage compared to multiple separate models.</li>
+</ul>
+</li>
+</ul>
+<h2 id="practical-example-shared-representations-for-related-tasks"><a class="header" href="#practical-example-shared-representations-for-related-tasks">Practical Example: Shared Representations for Related Tasks</a></h2>
+<p>Consider the analogy of learning sports:</p>
+<ul>
+<li><strong>Tennis and Ping Pong:</strong>
+<ul>
+<li><strong>Shared Skills:</strong> Hand-eye coordination, reflexes, and strategic thinking developed in tennis can enhance performance in ping pong.</li>
+<li><strong>MTL Parallel:</strong> Similarly, in MTL, learning segmentation can improve depth estimation because both tasks benefit from understanding object boundaries and spatial relationships.</li>
+</ul>
+</li>
+</ul>
+<p>This shared learning accelerates proficiency in related tasks without the need for separate, specialized training for each.</p>
+<h2 id="solutions-to-mtl-challenges"><a class="header" href="#solutions-to-mtl-challenges">Solutions to MTL Challenges</a></h2>
+<p>Addressing the inherent challenges in MTL is crucial for successful implementation. Below are strategies to overcome these obstacles:</p>
+<h2 id="balancing-loss-functions"><a class="header" href="#balancing-loss-functions">Balancing Loss Functions</a></h2>
+<ul>
+<li>
+<p><strong>Weighted Losses:</strong></p>
+<ul>
+<li><strong>Approach:</strong> Assign different weights to each task's loss function based on its importance or the amount of available data.</li>
+<li><strong>Benefit:</strong> Ensures that no single task dominates the training process, promoting balanced learning across tasks.</li>
+</ul>
+</li>
+<li>
+<p><strong>Multi-Objective Optimization:</strong></p>
+<ul>
+<li><strong>Approach:</strong> Use advanced optimization techniques like gradient blending or layer-wise adaptive weights to dynamically adjust the focus on different tasks during training.</li>
+<li><strong>Benefit:</strong> Facilitates harmonious learning where tasks complement rather than interfere with each other.</li>
+</ul>
+</li>
+</ul>
+<h2 id="task-agnostic-features"><a class="header" href="#task-agnostic-features">Task-Agnostic Features</a></h2>
+<ul>
+<li><strong>Shared Layers:</strong>
+<ul>
+<li><strong>Function:</strong> Extract high-level, generic features that are beneficial across all tasks.</li>
+<li><strong>Benefit:</strong> Reduces the need for task-specific feature extraction, optimizing resource usage and improving efficiency.</li>
+</ul>
+</li>
+</ul>
+<h2 id="task-specific-tuning"><a class="header" href="#task-specific-tuning">Task-Specific Tuning</a></h2>
+<ul>
+<li>
+<p><strong>Fine-Tuning Layers:</strong></p>
+<ul>
+<li><strong>Approach:</strong> Incorporate additional layers in task-specific heads to allow further specialization without disrupting shared representations.</li>
+<li><strong>Benefit:</strong> Mitigates task interference by providing dedicated pathways for task-specific adjustments.</li>
+</ul>
+</li>
+<li>
+<p><strong>Modular Design:</strong></p>
+<ul>
+<li><strong>Approach:</strong> Design the model architecture to facilitate easy addition or removal of task-specific components.</li>
+<li><strong>Benefit:</strong> Enhances flexibility and scalability, allowing the model to adapt to new tasks with minimal reconfiguration.</li>
+</ul>
+</li>
+</ul>
+<h2 id="advanced-concepts-in-mtl"><a class="header" href="#advanced-concepts-in-mtl">Advanced Concepts in MTL</a></h2>
+<h2 id="multi-label-classification-within-mtl"><a class="header" href="#multi-label-classification-within-mtl">Multi-Label Classification within MTL</a></h2>
+<p>While MTL inherently involves multiple tasks, it can also encompass multi-label classification:</p>
+<ul>
+<li><strong>Multi-Label Classification:</strong>
+<ul>
+<li><strong>Definition:</strong> Assigning multiple labels to a single input instance (e.g., identifying all objects present in an image).</li>
+<li><strong>Integration with MTL:</strong> Within an MTL framework, multi-label classification can be treated as one of the tasks, alongside others like regression or segmentation, enhancing the model’s comprehensive understanding.</li>
+</ul>
+</li>
+</ul>
+<h2 id="transfer-learning-and-mtl"><a class="header" href="#transfer-learning-and-mtl">Transfer Learning and MTL</a></h2>
+<p>MTL naturally facilitates transfer learning:</p>
+<ul>
+<li><strong>Concept:</strong> Features learned from one task can be transferred to improve performance on related tasks.</li>
+<li><strong>Example:</strong> Features learned from segmentation can aid depth estimation by providing contextual understanding of object boundaries.</li>
+</ul>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>Multi-Task Learning is a robust approach that leverages shared knowledge across multiple tasks, enhancing both performance and efficiency. By structuring MTL models with shared encoders and task-specific heads, practitioners can achieve a balanced, scalable, and versatile solution capable of handling complex, multi-faceted tasks within a single model framework. This documentation has outlined the fundamentals, challenges, and benefits of MTL, providing a solid foundation for implementing MTL in real-world applications.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../intro/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../intro/notions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../intro/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../intro/notions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

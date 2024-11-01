@@ -1,0 +1,71 @@
+# mdBook 
+book
+
+# Dataset
+
+UTKFace/
+
+# Python cache and temporary files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.swp
+*.swo
+
+# Environment and package files
+env/
+venv/
+.venv/
+*.env
+*.venv
+*.DS_Store
+*.egg
+*.egg-info/
+dist/
+build/
+
+# PyTorch related files
+*.pt
+*.pth
+*.pkl
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Matplotlib cache
+.matplotlib/
+
+# Dataset and large files
+UTKFace/
+*.zip
+*.tar.gz
+
+# Logs and local files
+*.log
+*.csv
+*.h5
+*.db
+*.sqlite
+*.xls
+*.xlsx
+*.pkl
+output/
+logs/
+*.log
+*.out
+
+# Ignore downloaded models and weights
+models/
+weights/
+*.ckpt
+best_model.pth
+
+# VSCode or PyCharm specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# OS generated files
+Thumbs.db
+.DS_Store

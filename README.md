@@ -1,8 +1,8 @@
-# Multi-Task Learning on JetRacer
+# Multi-Task-Learning on JetRacer
 
-This repository provides educational content and projects related to **Multi-Task Learning** in various domains, such as self-driving cars. Below is an overview of the modules and lessons covered.
+This repository provides educational content and projects related to **Multi-Task-Learning** in various domains, such as self-driving cars. Below is an overview of the modules and lessons covered.
 
-## Introduction to Multi-Task Learning
+## Introduction to Multi-Task-Learning
 1. **[Introduction to Multi-Task Learning](./docs/src/intro/introduction.md)**
 2. **[Architecture, Encoders & Decoders, Challenges, and Solutions](./docs/src/intro/notions.md)**
 2. **[Project: UTK-Face Dataset](./docs/src/intro/utk-face-dataset.md)**
